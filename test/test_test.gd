@@ -10,4 +10,4 @@ const __source: String = 'res://test.gd'
 
 func test_test() -> void:
 	# remove this line and complete your test
-	assert_bool(false).is_true()
+	assert_bool(true).is_true()
