@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 InputManager="*res://input/input_manager.gd"
+ItemsManager="*res://item/items_manager.tscn"
 
 [editor_plugins]
 
