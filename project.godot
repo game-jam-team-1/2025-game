@@ -22,3 +22,8 @@ ItemsManager="*res://item/items_manager.tscn"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
+
+[gdunit4]
+
+settings/test/test_timeout_seconds=10
+ui/toolbar/run_overall=true

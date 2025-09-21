@@ -13,10 +13,10 @@ func _ready() -> void:
 	var tier_num: int = 1
 	var copied_pool: Array[ItemResource] = item_pool
 	while !copied_pool.is_empty():
-		var tier: ItemTier = ItemTier.new()
-		tier.tier = tier_num
+		var tier: ItemTier = ItemTier.new(tier_num)
 		copied_pool = tier.retreive_from_pool(copied_pool)
 		tier_num += 1
+		tiers.append(tier)
 
 ## Gets a random item from any tier.
 func get_random_item() -> ItemResource:
