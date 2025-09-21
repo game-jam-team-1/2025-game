@@ -180,19 +180,19 @@ script = ExtResource("1_n6d2u")
 
 [node name="RayCast1" type="RayCast2D" parent="Movement"]
 position = Vector2(-41, -45)
-target_position = Vector2(0, -25)
+target_position = Vector2(0, -50)
 
 [node name="RayCast2" type="RayCast2D" parent="Movement"]
 position = Vector2(-22, -45)
-target_position = Vector2(0, -25)
+target_position = Vector2(0, -50)
 
 [node name="RayCast3" type="RayCast2D" parent="Movement"]
 position = Vector2(22, -45)
-target_position = Vector2(0, -25)
+target_position = Vector2(0, -50)
 
 [node name="RayCast4" type="RayCast2D" parent="Movement"]
 position = Vector2(41, -45)
-target_position = Vector2(0, -25)
+target_position = Vector2(0, -50)
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("2_4uc7p")
