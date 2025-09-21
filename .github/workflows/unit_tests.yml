@@ -1,5 +1,9 @@
 name: GdUnit4 Tests
-on: [push, pull_request]
+on: [pull_request]
+
+permissions:
+  checks: write
+  contents: read
 
 jobs:
   test:
