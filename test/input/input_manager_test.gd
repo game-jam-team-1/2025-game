@@ -7,17 +7,16 @@ extends GdUnitTestSuite
 # TestSuite generated from
 const __source: String = 'res://input/input_manager.gd'
 
-@onready var scene: PackedScene = preload("uid://dxc2ul7nekin5")
-
 var singleton: SingletonInputManager
 var button_1: InputButton
 var button_2: InputButton
 
 func before_test() -> void:
-	singleton = scene.instantiate()
+	singleton = SingletonInputManager.new()
+	singleton._ready()
 
 func test_get_button() -> void:
-	assert_str(singleton.get_button("space").input_name).is_equal("space")
+	assert_str(singleton.get_button("ui_accept").input_name).is_equal("ui_accept")
 
 func test_get_button_axis() -> void:
 	button_1 = InputButton.new()

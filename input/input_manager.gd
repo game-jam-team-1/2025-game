@@ -15,7 +15,7 @@ signal new_controller(controller: Controller)
 var controllers: Array[Controller]
 
 ## An array of buttons, these have names that will be used in all of the functions.
-@export var buttons: Array[InputButton]
+var buttons: Array[InputButton]
 
 func _ready() -> void:
 	var keyboard: Controller = Controller.new(Controller.Type.KEYBOARD, 0)
@@ -26,6 +26,12 @@ func _ready() -> void:
 		var controller: Controller = Controller.new(Controller.Type.GAMEPAD, id)
 		controllers.append(controller)
 		new_controller.emit(controller)
+	
+	for action: StringName in InputMap.get_actions():
+		var events: Array[InputEvent] = InputMap.action_get_events(action)
+		var button: InputButton = InputButton.new(events)
+		button.input_name = action
+		buttons.append(button)
 
 func _process(_delta: float) -> void:
 	var joypads: Array[int] = Input.get_connected_joypads()
@@ -62,7 +68,7 @@ func get_button(button_name: String) -> InputButton:
 	for button in buttons:
 		if button.input_name == button_name:
 			return button
-	assert(false, "Tried to get a button but that button does not exist.")
+	assert(false, "Tried to get a button but that button does not exist: " + button_name)
 	return null
 
 ## Returns true if the button exists in the input map.
