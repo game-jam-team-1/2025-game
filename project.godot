@@ -17,7 +17,12 @@ config/icon="res://icon.svg"
 [autoload]
 
 InputManager="*res://input/input_manager.gd"
+DataManager="*res://data/data_manager.tscn"
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
+
+[gdunit4]
+
+ui/toolbar/run_overall=true
