@@ -1,12 +1,16 @@
 class_name SingletonInputManager
 extends Node
 ## Manages input and supports couch multiplayer.
+##
+## To use InputManager, register a device (-1 for keyboard) with a player using
+## [method register_controller]. That method will return the [class Controller]
+## that you can use for inputs. To not reparent the controller.
 
 ## Emits if a button is pressed.
-signal button_pressed(event_name: String, player_id: int, event: InputEvent)
+signal button_pressed(event_name: String, controller: Controller)
 
 ## Emits if a button is released.
-signal button_released(event_name: String, player_id: int, event: InputEvent)
+signal button_released(event_name: String, controller: Controller)
 
 ## Emitted when a new controller is connected.
 signal new_controller(controller: Controller)
@@ -18,20 +22,16 @@ var controllers: Array[Controller]
 var buttons: Array[InputButton]
 
 func _ready() -> void:
-	var keyboard: Controller = Controller.new(Controller.Type.KEYBOARD, 0)
-	controllers.append(keyboard)
-	new_controller.emit(keyboard)
-	var joypads: Array[int] = Input.get_connected_joypads()
-	for id: int in joypads:
-		var controller: Controller = Controller.new(Controller.Type.GAMEPAD, id)
-		controllers.append(controller)
-		new_controller.emit(controller)
-	
 	for action: StringName in InputMap.get_actions():
 		var events: Array[InputEvent] = InputMap.action_get_events(action)
 		var button: InputButton = InputButton.new(events)
 		button.input_name = action
 		buttons.append(button)
+	
+	add_controller(Controller.Type.KEYBOARD, -1)
+	var joypads: Array[int] = Input.get_connected_joypads()
+	for id: int in joypads:
+		add_controller(Controller.Type.GAMEPAD, id)
 
 func _process(_delta: float) -> void:
 	var joypads: Array[int] = Input.get_connected_joypads()
@@ -43,49 +43,72 @@ func _process(_delta: float) -> void:
 				break
 		
 		if !has_controller_with_id:
-			var controller: Controller = Controller.new(Controller.Type.GAMEPAD, id)
-			controllers.append(controller)
-			new_controller.emit(controller)
+			add_controller(Controller.Type.GAMEPAD, id)
 
 func _input(event: InputEvent) -> void:
 	for controller: Controller in controllers:
-		if controller.is_input_this_controller(event):
-			_handle_input_with_controller(event, controller)
+		controller.apply_input(event)
 
-## Internal, handles an event on a specific controller.
-func _handle_input_with_controller(event: InputEvent, controller: Controller) -> void:
-	for button in buttons:
-		var state: InputButton.ButtonState = button.get_state_with_input(event)
-		if state == InputButton.ButtonState.NOT_THIS:
-			continue
-		if state == InputButton.ButtonState.JUST_PRESSED:
-			button_pressed.emit(button.input_name, controller.player_id, event)
-		if state == InputButton.ButtonState.JUST_RELEASED:
-			button_released.emit(button.input_name, controller.player_id, event)
+## Private, a button was just pressed on a controller.
+func _button_just_pressed(button: String, controller: Controller) -> void:
+	button_pressed.emit(button, controller)
 
-## Gets the [class InputButton] associated with the name.
-func get_button(button_name: String) -> InputButton:
-	for button in buttons:
-		if button.input_name == button_name:
-			return button
-	assert(false, "Tried to get a button but that button does not exist: " + button_name)
+## Private, a button was just released on a controller.
+func _button_just_released(button: String, controller: Controller) -> void:
+	button_released.emit(button, controller)
+
+## Registers a controller with the device_id to a player_id, then returns the controller.
+func register_controller(device_id: int, player_id: int) -> Controller:
+	var controller: Controller = get_controller_from_device(device_id)
+	if controller == null:
+		return null
+	controller.player_id = player_id
+	return controller
+
+## Unregister a controller with the player_id. That controller will now have an
+## id of -1.
+func unregister_controller(player_id: int) -> void:
+	var controller: Controller = get_controller_from_player(player_id)
+	if controller == null:
+		return
+	controller.player_id = -1
+
+## Adds a controller with this type and controller ID.
+func add_controller(type: Controller.Type, id: int) -> void:
+	var controller: Controller = Controller.new(type, id)
+	add_custom_controller(controller)
+
+## Adds a custom controller object.
+func add_custom_controller(controller: Controller) -> void:
+	controller.buttons = buttons.duplicate_deep()
+	controllers.append(controller)
+	controller.button_pressed.connect(_button_just_pressed.bind(controller))
+	controller.button_released.connect(_button_just_released.bind(controller))
+	add_child(controller)
+	new_controller.emit(controller)
+
+## Gets the controller with the player id, or returns null.
+func get_controller_from_player(player: int) -> Controller:
+	for controller: Controller in controllers:
+		if controller.player_id == player:
+			return controller
 	return null
 
-## Returns true if the button exists in the input map.
-func has_button(button_name: String) -> bool:
-	for button in buttons:
-		if button.input_name == button_name:
-			return true
-	return false
+func get_controller_from_device(device: int) -> Controller:
+	for controller: Controller in controllers:
+		if controller.device_id == device:
+			return controller
+	return null
 
-## Gets the axis between two buttons (between -1 and 1)
-func get_button_axis(left: String, right: String) -> float:
-	return clamp(get_button(right).get_axis() - get_button(left).get_axis(), -1.0, 1.0)
+## Check if a button is pressed on the player. It is better to get the controller
+## and always check on that.
+func is_button_pressed(button_name: String, player: int) -> bool:
+	var controller: Controller = get_controller_from_player(player)
+	if controller == null:
+		return false
+	return controller.is_button_pressed(button_name)
 
-## Checks if a button is pressed currently.
-func is_button_pressed(button_name: String) -> bool:
-	return get_button(button_name).is_pressed()
-
-## Checks if a button is released currently.
-func is_button_released(button_name: String) -> bool:
-	return !is_button_pressed(button_name)
+## Check if a button is released on the player. It is better to get the controller
+## and always check on that.
+func is_button_released(button_name: String, player: int) -> bool:
+	return !is_button_pressed(button_name, player)
