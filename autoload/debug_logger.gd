@@ -1,4 +1,5 @@
 # debug_logger.gd
+class_name SingletonInputLogger
 extends Node
 
 var DEBUG: bool = true

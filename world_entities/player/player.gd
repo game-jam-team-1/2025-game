@@ -1,9 +1,12 @@
 class_name Player
 extends CharacterBody2D
 
-@export var debug: bool = false
+## Emitted when health goes below or equal to 0. To is who killed us.
+signal died(to: Node)
 
+@export var debug: bool = false
 @export var controller_id: int = 0  ## The controller device the player is using, also seen as player_id
+
 var skin_id: int = 0  ## Player appearance / skin / character
 
 var facing_direction: int = 1  ## -1 is left, 1 is right
@@ -35,3 +38,6 @@ func is_on_floor_custom() -> bool:
 
 func get_input_velocity() -> Vector2:
 	return input_velocity
+
+func _on_health_died(entity: Node) -> void:
+	died.emit(entity)

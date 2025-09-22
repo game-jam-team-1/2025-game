@@ -1,14 +1,15 @@
-[gd_scene load_steps=29 format=3 uid="uid://gxwhd0it1x17"]
+[gd_scene load_steps=30 format=3 uid="uid://gxwhd0it1x17"]
 
 [ext_resource type="Script" uid="uid://csarmf4fma2qg" path="res://world_entities/player/movement.gd" id="1_n6d2u"]
 [ext_resource type="Script" uid="uid://25kbeu7c3n56" path="res://world_entities/player/player.gd" id="1_qnwhl"]
 [ext_resource type="Script" uid="uid://csdam5q67jww2" path="res://world_entities/player/player_state_machine/player_state_machine.gd" id="2_4uc7p"]
-[ext_resource type="Texture2D" uid="uid://beelhcvtbjfad" path="res://world_entities/player/player_state_machine/player_sheet.png" id="2_q1p65"]
+[ext_resource type="Texture2D" uid="uid://beelhcvtbjfad" path="res://world_entities/player/player_sheet.png" id="2_q1p65"]
 [ext_resource type="Script" uid="uid://dg7tjf8384qud" path="res://world_entities/player/player_state_machine/player_states/idle.gd" id="3_psivb"]
 [ext_resource type="Script" uid="uid://dt003io07kcf4" path="res://world_entities/player/animation.gd" id="3_xr3o8"]
 [ext_resource type="Script" uid="uid://djlu3a0hrwha3" path="res://world_entities/player/player_state_machine/player_states/jump.gd" id="4_qnwhl"]
 [ext_resource type="Script" uid="uid://clhempxg4idiu" path="res://world_entities/player/player_state_machine/player_states/walk.gd" id="5_itbdt"]
 [ext_resource type="Script" uid="uid://reapyc3t47ie" path="res://world_entities/player/player_state_machine/player_states/fall.gd" id="6_q1p65"]
+[ext_resource type="Script" uid="uid://dr8bvnfebp76" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="10_xr3o8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0wet7"]
 atlas = ExtResource("2_q1p65")
@@ -209,3 +210,9 @@ script = ExtResource("5_itbdt")
 
 [node name="Fall" type="Node" parent="StateMachine"]
 script = ExtResource("6_q1p65")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("10_xr3o8")
+metadata/_custom_type_script = "uid://dr8bvnfebp76"
+
+[connection signal="died" from="Health" to="." method="_on_health_died"]
