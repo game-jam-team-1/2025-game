@@ -23,6 +23,7 @@ var coyote_jump_timer: float = 0.0
 	$"RayCast4",
 ]
 
+# Jump and timers
 
 func _physics_process(delta: float) -> void:
 	if jump_buffer_timer > 0:
@@ -31,31 +32,21 @@ func _physics_process(delta: float) -> void:
 	if coyote_jump_timer > 0:
 		coyote_jump_timer -= delta
 	
-	if Input.is_action_just_pressed("jump", player.controller_id):
+	# TODO: Change to is_button_just_pressed
+	if player.controller.is_button_pressed("jump"):
 		jump_buffer_timer = jump_buffer_max_time
 	
 	if player.is_on_floor_custom():
 		coyote_jump_timer = coyote_jump_max_time
 
-
-## WALK
+# Walk
 
 func is_walk_requested() -> bool:
-	return Input.is_action_pressed("walk_left") || Input.is_action_pressed("walk_right")
-	"""
-	var left: float = Input.get_axis_value("walk_left", player.controller_id)
-	var right: float = Input.get_axis_value("walk_right", player.controller_id)
-	return !is_zero_approx(left) || !is_zero_approx(right)
-	"""
+	var dir: float = player.controller.get_button_axis("walk_left", "walk_right")
+	return !is_zero_approx(dir)
 
 func apply_walking_movement(delta: float) -> void:
-	#var left: float = Input.get_axis_value("walk_left", player.controller_id)
-	#var right: float = Input.get_axis_value("walk_right", player.controller_id)
-	
-	var left: float = 1 if Input.is_action_pressed("walk_left") else 0
-	var right: float = 1 if Input.is_action_pressed("walk_right") else 0
-	
-	var dir: float = clamp(right - left, -1, 1)
+	var dir: float = player.controller.get_button_axis("walk_left", "walk_right")
 	
 	if is_zero_approx(dir):
 		slow_down_walking_movement(delta)

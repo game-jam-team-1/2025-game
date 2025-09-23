@@ -178,6 +178,10 @@ shape = SubResource("RectangleShape2D_17qxi")
 
 [node name="Movement" type="Node2D" parent="."]
 script = ExtResource("1_n6d2u")
+gravity_force = null
+walk_speed = null
+jump_force = null
+slow_down_factor = null
 
 [node name="RayCast1" type="RayCast2D" parent="Movement"]
 position = Vector2(-41, -45)

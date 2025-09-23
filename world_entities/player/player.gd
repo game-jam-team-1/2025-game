@@ -5,7 +5,11 @@ extends CharacterBody2D
 signal died(to: Node)
 
 @export var debug: bool = false
-@export var controller_id: int = 0  ## The controller device the player is using, also seen as player_id
+
+var player_id: int = 0
+
+var controller: Controller
+var controller_id: int = -1
 
 var skin_id: int = 0  ## Player appearance / skin / character
 
@@ -20,13 +24,18 @@ var input_velocity: Vector2 = Vector2.ZERO
 
 @onready var movement: PlayerMovement = $"Movement"
 
+
 func _ready() -> void:
+	controller = InputManager.register_controller(controller_id, player_id)
+	
 	state_machine.init(self)
 	state_machine.changed_state.connect(change_state)
+
 
 func change_state(state: State) -> void:
 	if debug:
 		DebugLogger.info("Player State: %s" % [state.name])
+
 
 func _physics_process(delta: float) -> void:
 	state_machine.process_physics(delta)
