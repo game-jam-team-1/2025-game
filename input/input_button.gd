@@ -33,7 +33,9 @@ static func check_events_equal(check_event: InputEvent, our_event: InputEvent) -
 	if our_event is InputEventKey && check_event is InputEventKey:
 		var our_as_key: InputEventKey = our_event as InputEventKey
 		var check_as_key: InputEventKey = check_event as InputEventKey
-		if our_as_key.keycode == check_as_key.keycode:
+		if our_as_key.keycode == check_as_key.keycode && !our_as_key.keycode == 0:
+			return true
+		if our_as_key.physical_keycode == check_as_key.physical_keycode && !our_as_key.physical_keycode == 0:
 			return true
 	if our_event is InputEventMouseButton && check_event is InputEventMouseButton:
 		var our_as_mb: InputEventMouseButton = our_event as InputEventMouseButton

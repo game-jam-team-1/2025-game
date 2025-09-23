@@ -20,7 +20,7 @@ func before_test() -> void:
 	singleton.free()
 
 func test_get_button() -> void:
-	assert_str(controller.get_button("ui_accept").input_name).is_equal("ui_accept")
+	assert_str(controller.get_button("walk_left").input_name).is_equal("walk_left")
 
 func test_is_input_this_controller() -> void:
 	var key: InputEventKey = InputEventKey.new()

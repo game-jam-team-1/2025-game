@@ -22,7 +22,10 @@ var controllers: Array[Controller]
 var buttons: Array[InputButton]
 
 func _ready() -> void:
+	InputMap.load_from_project_settings()
 	for action: StringName in InputMap.get_actions():
+		if action.begins_with("ui"):
+			continue
 		var events: Array[InputEvent] = InputMap.action_get_events(action)
 		var button: InputButton = InputButton.new(events)
 		button.input_name = action
@@ -80,7 +83,10 @@ func add_controller(type: Controller.Type, id: int) -> void:
 
 ## Adds a custom controller object.
 func add_custom_controller(controller: Controller) -> void:
-	controller.buttons = buttons.duplicate_deep()
+	var duplicated: Array[InputButton] = []
+	for button in buttons:
+		duplicated.append(button.duplicate(true))
+	controller.buttons = duplicated
 	controllers.append(controller)
 	controller.button_pressed.connect(_button_just_pressed.bind(controller))
 	controller.button_released.connect(_button_just_released.bind(controller))
