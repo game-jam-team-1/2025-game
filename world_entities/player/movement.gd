@@ -32,8 +32,7 @@ func _physics_process(delta: float) -> void:
 	if coyote_jump_timer > 0:
 		coyote_jump_timer -= delta
 	
-	# TODO: Change to is_button_just_pressed
-	if player.controller.is_button_pressed("jump"):
+	if player.controller.is_button_just_pressed("jump"):
 		jump_buffer_timer = jump_buffer_max_time
 	
 	if player.is_on_floor_custom():

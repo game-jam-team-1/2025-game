@@ -20,6 +20,12 @@ var player_id: int = -1 ## This is -1 if the controller has no player.
 ## An array of buttons, these have names that will be used in all of the functions.
 var buttons: Array[InputButton]
 
+## Do not access this directly. Array of buttons that were just pressed.
+var _just_pressed_array: Array[String]
+
+## Do not access this directly. Array of buttons that were just released.
+var _just_released_array: Array[String]
+
 func _init(set_type: Type, set_controller_id: int) -> void:
 	type = set_type
 	device_id = set_controller_id
@@ -35,6 +41,8 @@ func is_input_this_controller(event: InputEvent) -> bool:
 ## Attempt to apply an input to this controller. Typically you would not call
 ## this.
 func apply_input(event: InputEvent) -> void:
+	_just_pressed_array = []
+	_just_released_array = []
 	if !is_input_this_controller(event):
 		return
 	for button in buttons:
@@ -43,8 +51,10 @@ func apply_input(event: InputEvent) -> void:
 			continue
 		if state == InputButton.ButtonState.JUST_PRESSED:
 			button_pressed.emit(button.input_name)
+			_just_pressed_array.append(button.input_name)
 		if state == InputButton.ButtonState.JUST_RELEASED:
 			button_released.emit(button.input_name)
+			_just_released_array.append(button.input_name)
 
 ## Gets the [class InputButton] associated with the name.
 func get_button(button_name: String) -> InputButton:
@@ -72,3 +82,11 @@ func is_button_pressed(button_name: String) -> bool:
 ## Checks if a button is released currently.
 func is_button_released(button_name: String) -> bool:
 	return !is_button_pressed(button_name)
+
+## Checks if a button was just pressed.
+func is_button_just_pressed(button_name: String) -> bool:
+	return _just_pressed_array.has(button_name)
+
+## Checks if a button was just released.
+func is_button_just_released(button_name: String) -> bool:
+	return _just_released_array.has(button_name)

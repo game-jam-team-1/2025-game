@@ -59,6 +59,24 @@ func test_get_button_axis() -> void:
 	assert_float(controller.get_button_axis("button_1", "button_2")).is_equal_approx(0.0, 0.01)
 
 func test_is_button_pressed() -> void:
+	var key: InputEventKey = InputEventKey.new()
+	key.keycode = KEY_SPACE
+	button_1 = InputButton.new()
+	button_1.input_name = "button"
+	button_1.valid_events.append(key)
+	controller.buttons.append(button_1)
+	key.pressed = true
+	controller.apply_input(key)
+	assert_bool(controller.is_button_just_pressed("button")).is_true()
+	controller.apply_input(key)
+	assert_bool(controller.is_button_just_pressed("button")).is_false()
+	key.pressed = false
+	controller.apply_input(key)
+	assert_bool(controller.is_button_just_released("button")).is_true()
+	controller.apply_input(key)
+	assert_bool(controller.is_button_just_released("button")).is_false()
+
+func test_is_button_just_pressed() -> void:
 	button_1 = InputButton.new()
 	button_1.input_name = "button"
 	controller.buttons.append(button_1)
