@@ -7,8 +7,22 @@ extends GdUnitTestSuite
 # TestSuite generated from
 const __source: String = 'res://input/controller.gd'
 
+var controller: Controller
+var button_1: InputButton
+var button_2: InputButton
+
+func before_test() -> void:
+	controller = Controller.new(Controller.Type.KEYBOARD, 1)
+	var singleton: SingletonInputManager = SingletonInputManager.new()
+	singleton._ready()
+	singleton.add_custom_controller(controller)
+	singleton.remove_child(controller)
+	singleton.free()
+
+func test_get_button() -> void:
+	assert_str(controller.get_button("walk_left").input_name).is_equal("walk_left")
+
 func test_is_input_this_controller() -> void:
-	var controller: Controller = Controller.new(Controller.Type.KEYBOARD, 1)
 	var key: InputEventKey = InputEventKey.new()
 	var mouse: InputEventMouseButton = InputEventMouseButton.new()
 	var joypad: InputEventJoypadButton = InputEventJoypadButton.new()
@@ -28,4 +42,49 @@ func test_is_input_this_controller() -> void:
 	analogue.device = 2
 	assert_bool(controller.is_input_this_controller(joypad)).is_false()
 	assert_bool(controller.is_input_this_controller(analogue)).is_false()
-	
+
+func test_get_button_axis() -> void:
+	button_1 = InputButton.new()
+	button_1.input_name = "button_1"
+	button_2 = InputButton.new()
+	button_2.input_name = "button_2"
+	controller.buttons.append_array([button_1, button_2])
+	button_1._axis = 1
+	assert_float(controller.get_button_axis("button_1", "button_2")).is_equal_approx(-1.0, 0.01)
+	button_2._axis = 1
+	assert_float(controller.get_button_axis("button_1", "button_2")).is_equal_approx(0.0, 0.01)
+	button_1._axis = 0
+	assert_float(controller.get_button_axis("button_1", "button_2")).is_equal_approx(1.0, 0.01)
+	button_2._axis = 0
+	assert_float(controller.get_button_axis("button_1", "button_2")).is_equal_approx(0.0, 0.01)
+
+func test_is_button_pressed() -> void:
+	var key: InputEventKey = InputEventKey.new()
+	key.keycode = KEY_SPACE
+	button_1 = InputButton.new()
+	button_1.input_name = "button"
+	button_1.valid_events.append(key)
+	controller.buttons.append(button_1)
+	key.pressed = true
+	controller.apply_input(key)
+	assert_bool(controller.is_button_just_pressed("button")).is_true()
+	controller.apply_input(key)
+	assert_bool(controller.is_button_just_pressed("button")).is_false()
+	key.pressed = false
+	controller.apply_input(key)
+	assert_bool(controller.is_button_just_released("button")).is_true()
+	controller.apply_input(key)
+	assert_bool(controller.is_button_just_released("button")).is_false()
+
+func test_is_button_just_pressed() -> void:
+	button_1 = InputButton.new()
+	button_1.input_name = "button"
+	controller.buttons.append(button_1)
+	assert_bool(controller.is_button_released("button")).is_true()
+	assert_bool(controller.is_button_pressed("button")).is_false()
+	button_1._state = InputButton.ButtonState.PRESSED
+	assert_bool(controller.is_button_pressed("button")).is_true()
+	assert_bool(controller.is_button_released("button")).is_false()
+
+func after_test() -> void:
+	controller.free()
