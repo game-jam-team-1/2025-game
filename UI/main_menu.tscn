@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://cc24n4ll5qeun"]
+[gd_scene load_steps=3 format=3 uid="uid://cc24n4ll5qeun"]
 
-[ext_resource type="Script" uid="uid://b47s4drm5fday" path="res://main_menu.gd" id="1_p8ccj"]
+[ext_resource type="Script" path="res://main_menu.gd" id="1_p8ccj"]
+[ext_resource type="PackedScene" uid="uid://c7pofk4jh5cr8" path="res://world_entities/world_1.tscn" id="2_0dkrt"]
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_p8ccj")
+level_scene = ExtResource("2_0dkrt")
 
 [node name="PlayButton" type="Button" parent="."]
 offset_left = 264.0
