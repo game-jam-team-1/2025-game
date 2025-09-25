@@ -20,9 +20,18 @@ config/icon="res://icon.svg"
 DebugLogger="*res://autoload/debug_logger.gd"
 InputManager="*res://input/input_manager.gd"
 
+[debug]
+
+gdscript/warnings/unused_parameter=0
+gdscript/warnings/unused_signal=0
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/gdUnit4/plugin.cfg", "res://addons/health_hitbox_hurtbox/plugin.cfg")
+
+[gdunit4]
+
+ui/toolbar/run_overall=true
 
 [input]
 
