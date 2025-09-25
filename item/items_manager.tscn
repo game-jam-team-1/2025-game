@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct7a11fpp8l5g"]
+
+[ext_resource type="Script" uid="uid://dvobgp07tlim3" path="res://item/items_manager.gd" id="1_0jglt"]
+
+[node name="WeaponsManager" type="Node"]
+script = ExtResource("1_0jglt")
+metadata/_custom_type_script = "uid://dvobgp07tlim3"
