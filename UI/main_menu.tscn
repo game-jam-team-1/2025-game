@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc24n4ll5qeun"]
+
+[ext_resource type="Script" path="res://main_menu.gd" id="1_p8ccj"]
+[ext_resource type="PackedScene" uid="uid://c7pofk4jh5cr8" path="res://world_entities/world_1.tscn" id="2_0dkrt"]
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_p8ccj")
+level_scene = ExtResource("2_0dkrt")
+
+[node name="PlayButton" type="Button" parent="."]
+offset_left = 264.0
+offset_top = 268.0
+offset_right = 824.0
+offset_bottom = 397.0
+theme_override_font_sizes/font_size = 32
+text = "PLAY"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 161.0
+offset_top = 26.0
+offset_right = 931.0
+offset_bottom = 171.0
+theme_override_font_sizes/normal_font_size = 64
+text = "Main Menu
+"
+horizontal_alignment = 1
+
+[connection signal="button_down" from="PlayButton" to="." method="_on_play_button_button_down"]
