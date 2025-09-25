@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cn8dtw41drg8q"]
+
+[ext_resource type="Script" uid="uid://bq1waiwkfvqec" path="res://data/data_manager.gd" id="1_mf6br"]
+
+[node name="DataManager" type="Node"]
+script = ExtResource("1_mf6br")
+_game_settings = "res://data/game_settings.txt"
+user_data_file_name = "save_data"
+metadata/_custom_type_script = "uid://bq1waiwkfvqec"
