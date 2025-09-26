@@ -11,8 +11,12 @@ extends Weapon
 @export var damage_multiplier: float ## Damage multiplied based on speed increase / 100.
 
 func _ready() -> void:
+	super()
 	assert(hitbox, "MeleWeapon must have a HitBox2D node set.")
 	hitbox.hurt_box_entered.connect(_on_hurt_box_entered)
+
+func _on_cooldown_timer_timeout() -> void:
+	hitbox.ignore_collisions = false
 
 ## Gets damage multiplier based on the speed of the weapon.
 func get_multiplier() -> float:
@@ -20,4 +24,5 @@ func get_multiplier() -> float:
 
 ## Signal from [signal HitBox2D.hit_box_entered] on [member hitbox].
 func _on_hurt_box_entered(hurtbox: HurtBox2D) -> void:
+	hitbox.ignore_collisions = true
 	hurtbox.health.damage(base_damage, 0, get_multiplier())

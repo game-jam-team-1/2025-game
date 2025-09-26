@@ -9,7 +9,14 @@ signal damage_dealt(amount: float)
 
 @export var cooldown_time: float ## Time until the weapon can be used again after using.
 
-@onready var cooldown_timer: SceneTreeTimer = get_tree().create_timer(0) ## Timer for using.
+@onready var cooldown_timer: ResourceTimer = ResourceTimer.new(0) ## Timer for using.
+
+func _ready() -> void:
+	super()
+	cooldown_timer.timeout.connect(_on_cooldown_timer_timeout)
+
+func _process(delta: float) -> void:
+	cooldown_timer.process(delta)
 
 ## Checks if timers are finished.
 func can_perform_action() -> bool:
@@ -21,3 +28,7 @@ func use_item() -> void:
 		return
 	cooldown_timer.time_left = cooldown_time
 	item_used.emit()
+
+## Signal from [signal SceneTreeTimer.timeout] on [member cooldown_timer].
+func _on_cooldown_timer_timeout() -> void:
+	pass

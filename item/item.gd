@@ -24,6 +24,9 @@ var tier: int
 ## this.
 var held_by: Player
 
+## If this item is the selected item in the inventory.
+var enabled: bool
+
 ## Current state. See [enum Item.ItemState].
 @export var state: ItemState = ItemState.HELD
 
@@ -35,9 +38,10 @@ var held_by: Player
 
 ## If this can be thrown. If this is false, [code]throw_item[/code] probably
 ## won't do anything.
-@export var can_be_thrown: bool
+@export var can_be_thrown: bool = true
 
 func _ready() -> void:
+	assert(area, "Item must have an Area2D for detection")
 	assert(resource, "Item must have an ItemResource")
 	tier = resource.tier
 
@@ -50,6 +54,10 @@ func notify_picked_up(by: Player) -> void:
 func notify_thrown() -> void:
 	state = ItemState.ORPHAN
 
+## Gets the scene of this item from [member resource]. Loads at runtime.
+func get_scene() -> PackedScene:
+	return load(resource.scene_path)
+
 ## Call this to make the item be used.
 @abstract
 func use_item() -> void
@@ -57,3 +65,8 @@ func use_item() -> void
 ## Call this to make the item get thrown. Force is an impulse, in kg px/s
 @abstract 
 func throw_item(direction: Vector2, force: float) -> void
+
+## Can be called by the player to make this item be held. The item decides what 
+## to do with this information.
+@abstract 
+func follow_mouse(player_position: Vector2, mouse_position: Vector2) -> void

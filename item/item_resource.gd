@@ -5,7 +5,7 @@ extends Resource
 @export var tier: int
 
 ## Scene of this weapon.
-@export var scene: PackedScene
+@export_file("*.tscn") var scene_path: String
 
 ## If this item can be stacked in an inventory
 @export var stackable: bool

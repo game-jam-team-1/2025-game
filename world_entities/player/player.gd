@@ -8,6 +8,9 @@ signal died(to: Node)
 ## TODO: Replace this with a Global singleton debug.
 @export var debug: bool = false
 
+## Default weapon (probably [class Fists]).
+@export var default_weapon: MeleWeapon
+
 ## Player ID, usually gonna be from 1-4.
 var player_id: int = 0
 
@@ -29,14 +32,24 @@ var input_velocity: Vector2 = Vector2.ZERO
 
 @onready var state_machine: PlayerStateMachine = $"StateMachine"
 @onready var movement: PlayerMovement = $"Movement"
+@onready var holding_item: Item = default_weapon ## Item the player is currently holding.
 
 func _ready() -> void:
 	controller = InputManager.register_controller(controller_id, player_id)
 	
 	state_machine.init(self)
 	state_machine.changed_state.connect(_on_changed_state)
+	
+	if holding_item:
+		holding_item.notify_picked_up(self)
 
 func _physics_process(delta: float) -> void:
+	if controller.is_button_just_pressed("attack") && holding_item:
+		holding_item.use_item()
+	
+	if holding_item:
+		holding_item.enabled = true
+		holding_item.follow_mouse(global_position, get_global_mouse_position())
 	state_machine.process_physics(delta)
 	input_velocity = velocity
 

@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://brf84phr2760b"]
+
+[ext_resource type="Script" uid="uid://ctkiyqwabrkcn" path="res://item/weapon/fists.gd" id="1_y6p1f"]
+[ext_resource type="Script" uid="uid://wyebtt4tqydr" path="res://item/item_resource.gd" id="2_t76w3"]
+[ext_resource type="Script" uid="uid://b1vnxk5bfh6el" path="res://addons/health_hitbox_hurtbox/2d/hit_box_2d/hit_box_2d.gd" id="2_y1fxp"]
+
+[sub_resource type="Resource" id="Resource_pp7in"]
+script = ExtResource("2_t76w3")
+metadata/_custom_type_script = "uid://wyebtt4tqydr"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y6p1f"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t76w3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pp7in"]
+
+[node name="Fists" type="RigidBody2D" node_paths=PackedStringArray("hitbox", "area")]
+collision_layer = 0
+collision_mask = 2
+gravity_scale = 0.0
+linear_damp = 20.0
+script = ExtResource("1_y6p1f")
+hitbox = NodePath("HitBox2D")
+base_damage = 1
+damage_multiplier = 1.0
+cooldown_time = 0.2
+resource = SubResource("Resource_pp7in")
+area = NodePath("DetectionArea")
+can_be_thrown = false
+metadata/_custom_type_script = "uid://ctkiyqwabrkcn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_y6p1f")
+
+[node name="HitBox2D" type="Area2D" parent="."]
+script = ExtResource("2_y1fxp")
+metadata/_custom_type_script = "uid://b1vnxk5bfh6el"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox2D"]
+shape = SubResource("CircleShape2D_t76w3")
+debug_color = Color(0.86598647, 0.33645827, 0.3143482, 0.41960785)
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+visible = false
+shape = SubResource("CircleShape2D_pp7in")
