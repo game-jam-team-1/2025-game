@@ -38,6 +38,7 @@ var held_by: Player
 @export var can_be_thrown: bool
 
 func _ready() -> void:
+	assert(resource, "Item must have an ItemResource")
 	tier = resource.tier
 
 ## Call this function when the item is picked up.
