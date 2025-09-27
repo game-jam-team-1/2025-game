@@ -38,11 +38,13 @@ func is_input_this_controller(event: InputEvent) -> bool:
 		return true
 	return false
 
+func pre_inputs() -> void:
+	_just_pressed_array = []
+	_just_released_array = []
+
 ## Attempt to apply an input to this controller. Typically you would not call
 ## this.
 func apply_input(event: InputEvent) -> void:
-	_just_pressed_array = []
-	_just_released_array = []
 	if !is_input_this_controller(event):
 		return
 	for button in buttons:
