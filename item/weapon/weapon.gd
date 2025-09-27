@@ -7,7 +7,7 @@ extends Item
 ## Damage was dealt that was originating from this weapon.
 signal damage_dealt(amount: float)
 
-@export var cooldown_time: float ## Time until the weapon can be used again after using.
+@export var cooldown_time: float ## Time until the weapon can be used again after using. 
 
 @onready var cooldown_timer: ResourceTimer = ResourceTimer.new(0) ## Timer for using.
 
@@ -22,13 +22,18 @@ func _process(delta: float) -> void:
 func can_perform_action() -> bool:
 	return cooldown_timer.time_left == 0
 
-## Emits signal and starts timer if can perform reload.
+## Emits signal and calls [function begin_attack].
 func use_item() -> void:
 	if !can_perform_action():
 		return
-	cooldown_timer.time_left = cooldown_time
 	item_used.emit()
 
-## Signal from [signal SceneTreeTimer.timeout] on [member cooldown_timer].
+## Signal
 func _on_cooldown_timer_timeout() -> void:
 	pass
+
+func attacked() -> void:
+	pass
+
+@abstract
+func begin_attack() -> void

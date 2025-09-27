@@ -26,6 +26,12 @@ func _process(delta: float) -> void:
 func can_perform_action() -> bool:
 	return super.can_perform_action() && reload_timer.time_left == 0
 
+func use_item() -> void:
+	if !can_perform_action():
+		return
+	super()
+	begin_attack()
+
 ## Emits signal, resets timer and ammo count.
 func reload() -> void:
 	if !has_rounds || !can_perform_action():

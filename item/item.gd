@@ -20,12 +20,12 @@ enum ItemState {
 ## This item's tier. See [class SingletonItemsManager].
 var tier: int
 
-## The player this is held by. Properties or functions should not be called on 
-## this.
-var held_by: Player
-
 ## If this item is the selected item in the inventory.
 var enabled: bool
+
+## The player this is held by. Properties or functions should not be called on 
+## this.
+@export var held_by: Player
 
 ## Current state. See [enum Item.ItemState].
 @export var state: ItemState = ItemState.HELD
