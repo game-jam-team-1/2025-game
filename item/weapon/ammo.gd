@@ -1,5 +1,5 @@
 @tool
 @abstract
 class_name Ammo
-extends HitBox2D
+extends Hitbox
 ## Abstract class for bullet objects.

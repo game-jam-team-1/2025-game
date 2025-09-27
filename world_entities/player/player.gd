@@ -30,6 +30,7 @@ var facing_direction: int = 1
 ## this tracks wanted velocity (If no walls)
 var input_velocity: Vector2 = Vector2.ZERO
 
+@onready var hutbox: Hurtbox = $"Hurtbox"
 @onready var state_machine: PlayerStateMachine = $"StateMachine"
 @onready var movement: PlayerMovement = $"Movement"
 @onready var holding_item: Item = default_weapon ## Item the player is currently holding.
@@ -69,3 +70,7 @@ func _on_health_died(entity: Node) -> void:
 func _on_changed_state(state: State) -> void:
 	if debug:
 		DebugLogger.info("Player State: %s" % [state.name])
+
+func _on_hit() -> void:
+	if holding_item && holding_item is Weapon:
+		(holding_item as Weapon).attacked()

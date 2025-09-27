@@ -5,9 +5,13 @@ extends Weapon
 
 ## Hitbox that does damage, you can set actions. Player should set exclude.
 @export var hitbox: Hitbox
+
+## Time it takes to windup the weapon before the attack. If the player is attacked
+## during this time the attack is canceled.
 @export var windup_time: float
 
-@onready var windup_timer: ResourceTimer = ResourceTimer.new(0) ## Timer for short windup before attack.
+## Timer for short windup before attack.
+@onready var windup_timer: ResourceTimer = ResourceTimer.new(0) 
 
 func _ready() -> void:
 	super()
@@ -50,6 +54,7 @@ func attacked() -> void:
 func _on_hitbox_damaged(hurtbox: Hurtbox) -> void:
 	hitbox.disabled = true
 
+## Signal from [signal ResourceTimer.timeout] on [member windup_timer].
 func _on_windup_timer_timeout() -> void:
 	cooldown_timer.time_left = cooldown_time
 	begin_attack()

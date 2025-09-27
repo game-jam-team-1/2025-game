@@ -27,7 +27,7 @@ gdscript/warnings/unused_signal=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/gdUnit4/plugin.cfg", "res://addons/health_hitbox_hurtbox/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
 
 [gdunit4]
 

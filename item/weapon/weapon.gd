@@ -1,8 +1,7 @@
 @abstract
 class_name Weapon
 extends Item
-## Weapons are anything that can be used more than once. They may or may not use
-## ammo. They can also reload at certain use intervals.
+## Weapons are anything that can be used more than once. 
 
 ## Damage was dealt that was originating from this weapon.
 signal damage_dealt(amount: float)
@@ -28,12 +27,14 @@ func use_item() -> void:
 		return
 	item_used.emit()
 
-## Signal
+## Signal from [ResourceTimer.timeout] on [member cooldown_timer].
 func _on_cooldown_timer_timeout() -> void:
 	pass
 
+## Called by the player when it is attacked.
 func attacked() -> void:
 	pass
 
+## Called when the actual attack should begin.
 @abstract
 func begin_attack() -> void
