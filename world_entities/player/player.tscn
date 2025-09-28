@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://gxwhd0it1x17"]
+[gd_scene load_steps=33 format=3 uid="uid://gxwhd0it1x17"]
 
 [ext_resource type="Script" uid="uid://csarmf4fma2qg" path="res://world_entities/player/movement.gd" id="1_n6d2u"]
 [ext_resource type="Script" uid="uid://25kbeu7c3n56" path="res://world_entities/player/player.gd" id="1_qnwhl"]
@@ -9,7 +9,9 @@
 [ext_resource type="Script" uid="uid://djlu3a0hrwha3" path="res://world_entities/player/player_state_machine/player_states/jump.gd" id="4_qnwhl"]
 [ext_resource type="Script" uid="uid://clhempxg4idiu" path="res://world_entities/player/player_state_machine/player_states/walk.gd" id="5_itbdt"]
 [ext_resource type="Script" uid="uid://reapyc3t47ie" path="res://world_entities/player/player_state_machine/player_states/fall.gd" id="6_q1p65"]
-[ext_resource type="Script" uid="uid://dr8bvnfebp76" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="10_xr3o8"]
+[ext_resource type="PackedScene" uid="uid://brf84phr2760b" path="res://item/weapon/fists.tscn" id="11_0wet7"]
+[ext_resource type="Script" uid="uid://ctvwqnrn6swl0" path="res://components/health.gd" id="11_psar6"]
+[ext_resource type="Script" uid="uid://ohykoteh42la" path="res://components/hurtbox.gd" id="12_psar6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0wet7"]
 atlas = ExtResource("2_q1p65")
@@ -161,8 +163,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_17qxi"]
 size = Vector2(84, 96)
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_hvrdi"]
+radius = 42.107006
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("default_weapon")]
 script = ExtResource("1_qnwhl")
+default_weapon = NodePath("Fists")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -215,8 +221,17 @@ script = ExtResource("5_itbdt")
 [node name="Fall" type="Node" parent="StateMachine"]
 script = ExtResource("6_q1p65")
 
-[node name="Health" type="Node" parent="."]
-script = ExtResource("10_xr3o8")
-metadata/_custom_type_script = "uid://dr8bvnfebp76"
+[node name="Fists" parent="." instance=ExtResource("11_0wet7")]
+position = Vector2(68, -7)
 
-[connection signal="died" from="Health" to="." method="_on_health_died"]
+[node name="Health" type="Node" parent="."]
+script = ExtResource("11_psar6")
+health = 100.0
+metadata/_custom_type_script = "uid://ctvwqnrn6swl0"
+
+[node name="Hurtbox" type="Area2D" parent="."]
+script = ExtResource("12_psar6")
+metadata/_custom_type_script = "uid://ohykoteh42la"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_hvrdi")
