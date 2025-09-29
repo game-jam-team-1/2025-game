@@ -103,6 +103,7 @@ func get_controller_from_player(player: int) -> Controller:
 			return controller
 	return null
 
+## Gets a [class Controller] from a physical device. (-1 is keyboard).
 func get_controller_from_device(device: int) -> Controller:
 	for controller: Controller in controllers:
 		if controller.device_id == device:
@@ -121,3 +122,17 @@ func is_button_pressed(button_name: String, player: int) -> bool:
 ## and always check on that.
 func is_button_released(button_name: String, player: int) -> bool:
 	return !is_button_pressed(button_name, player)
+
+func get_available_devices() -> Array[int]:
+	var out: Array[int] = []
+	for controller in controllers:
+		if controller.player_id == -1:
+			out.append(controller.device_id)
+	return out
+
+func get_registered_controllers() -> Array[Controller]:
+	var out: Array[Controller] = []
+	for controller in controllers:
+		if controller.player_id != -1:
+			out.append(controller)
+	return out

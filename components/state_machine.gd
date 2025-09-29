@@ -35,18 +35,18 @@ func change_state(new_state: State) -> void:
 ## Pass through functions for the parent to call,
 ## handling state changes as needed.
 func process_input(event: InputEvent) -> void:
-	var new_state = current_state.process_input(event)
+	var new_state: State = current_state.process_input(event)
 	if new_state:
 		change_state(new_state)
 
 ## Call from the parent _process, calls process on the current state.
 func process_frame(delta: float) -> void:
-	var new_state = current_state.process_frame(delta)
+	var new_state: State = current_state.process_frame(delta)
 	if new_state:
 		change_state(new_state)
 
 ## Call from parent _physics_process, calls physics process on the current state.
 func process_physics(delta: float) -> void:
-	var new_state = current_state.process_physics(delta)
+	var new_state: State = current_state.process_physics(delta)
 	if new_state:
 		change_state(new_state)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c7pofk4jh5cr8"]
 
-[ext_resource type="PackedScene" uid="uid://gxwhd0it1x17" path="res://world_entities/player/player.tscn" id="1_1pqy5"]
+[ext_resource type="Script" uid="uid://0sgnf4u6m126" path="res://world_entities/player/player_manager.gd" id="1_1pqy5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_or1io"]
 size = Vector2(575, 82)
@@ -52,5 +52,11 @@ metadata/_edit_lock_ = true
 shape = SubResource("RectangleShape2D_or1io")
 metadata/_edit_lock_ = true
 
-[node name="Player" parent="." instance=ExtResource("1_1pqy5")]
-position = Vector2(550, 473)
+[node name="PlayerManager" type="Node" parent="." node_paths=PackedStringArray("spawn_points")]
+script = ExtResource("1_1pqy5")
+generate_unregistered = true
+spawn_points = [NodePath("Marker2D")]
+metadata/_custom_type_script = "uid://0sgnf4u6m126"
+
+[node name="Marker2D" type="Marker2D" parent="PlayerManager"]
+position = Vector2(341, 472)

@@ -221,8 +221,9 @@ script = ExtResource("5_itbdt")
 [node name="Fall" type="Node" parent="StateMachine"]
 script = ExtResource("6_q1p65")
 
-[node name="Fists" parent="." instance=ExtResource("11_0wet7")]
+[node name="Fists" parent="." node_paths=PackedStringArray("held_by") instance=ExtResource("11_0wet7")]
 position = Vector2(68, -7)
+held_by = NodePath("..")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("11_psar6")

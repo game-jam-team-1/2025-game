@@ -17,12 +17,12 @@ func get_push_force() -> Vector2:
 	for body in detection_area.get_overlapping_bodies():
 		if body is CharacterBody2D and body != parent:
 			# Use input_velocity if available
-			var body_vel = body.velocity
+			var body_vel: Vector2 = body.velocity
 			if body.has_method("get_input_velocity"):
 				body_vel = body.get_input_velocity()
 			
 			# Determine direction relative to parent
-			var position_dif = body.global_position.x - parent.global_position.x
+			var position_dif: float = body.global_position.x - parent.global_position.x
 			
 			# Only push if moving towards each other
 			if (position_dif > 0 and body_vel.x < 0) or (position_dif < 0 and body_vel.x > 0):

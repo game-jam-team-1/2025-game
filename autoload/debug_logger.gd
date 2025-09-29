@@ -10,14 +10,14 @@ const COLORS = {
 	"error": "red",
 }
 
-func log_message(message: String, level: String = "info"):
+func log_message(message: String, level: String = "info") -> void:
 	if not DEBUG:
 		return
 
-	var stack = get_stack()
-	var origin = ""
+	var stack: Array = get_stack()
+	var origin: String = ""
 	if stack.size() > 1:
-		var caller = stack[2]
+		var caller: Dictionary = stack[2]
 		origin = "%s:%s" % [caller.source.get_file(), caller.line]
 
 	var color: String = COLORS.get(level)
@@ -26,6 +26,6 @@ func log_message(message: String, level: String = "info"):
 
 	print_rich(msg_text)
 
-func info(msg): log_message(msg, "info")
-func warn(msg): log_message(msg, "warn")
-func error(msg): log_message(msg, "error")
+func info(msg: String) -> void: log_message(msg, "info")
+func warn(msg: String) -> void: log_message(msg, "warn")
+func error(msg: String) -> void: log_message(msg, "error")

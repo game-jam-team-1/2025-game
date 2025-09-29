@@ -91,8 +91,8 @@ func is_jump_just_pressed() -> bool:
 
 ## Checks if there isn't a ceiling right above the player.
 func can_jump() -> bool:
-	var inner_left = overhead_raycasts[1].is_colliding()
-	var inner_right = overhead_raycasts[2].is_colliding()
+	var inner_left: bool = overhead_raycasts[1].is_colliding()
+	var inner_right: bool = overhead_raycasts[2].is_colliding()
 	
 	return coyote_jump_timer > 0.0 && !inner_left && !inner_right
 
