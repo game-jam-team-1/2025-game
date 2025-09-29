@@ -1,4 +1,3 @@
-@tool
 @abstract
 class_name Ammo
 extends Hitbox

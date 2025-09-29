@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://brf84phr2760b"]
 
-[ext_resource type="Script" uid="uid://ctkiyqwabrkcn" path="res://item/weapon/fists.gd" id="1_y6p1f"]
+[ext_resource type="Script" uid="uid://ctkiyqwabrkcn" path="res://item/weapon/mele/fists.gd" id="1_y6p1f"]
 [ext_resource type="Script" uid="uid://wyebtt4tqydr" path="res://item/item_resource.gd" id="2_t76w3"]
 [ext_resource type="Script" uid="uid://dls1swe602c7j" path="res://components/hitbox.gd" id="3_t76w3"]
 

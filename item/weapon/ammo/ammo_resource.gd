@@ -1,4 +1,3 @@
-@abstract
 class_name AmmoResource
 extends ItemResource
 ## Base resource for ammo items.

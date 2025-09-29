@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://nng21tvobrtf"]
+
+[ext_resource type="Script" uid="uid://drfx68mje27lq" path="res://item/weapon/ranged/gun.gd" id="1_2smlw"]
+[ext_resource type="Resource" uid="uid://jkhoyvr353kr" path="res://item/weapon/ammo/gun_ammo_resource.tres" id="2_iuhax"]
+
+[node name="Gun" type="RigidBody2D"]
+script = ExtResource("1_2smlw")
+reload_time = 1.2
+ammo_resource = ExtResource("2_iuhax")
+metadata/_custom_type_script = "uid://drfx68mje27lq"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(3, 3)
+polygon = PackedVector2Array(2, 6, -3, 6, -3, -3, 28, -3, 28, 2, 2, 2)
