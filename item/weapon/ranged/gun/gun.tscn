@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://nng21tvobrtf"]
+
+[ext_resource type="Script" uid="uid://drfx68mje27lq" path="res://item/weapon/ranged/gun/gun.gd" id="1_2smlw"]
+[ext_resource type="Resource" uid="uid://jkhoyvr353kr" path="res://item/weapon/ranged/gun/gun_ammo_resource.tres" id="2_iuhax"]
+[ext_resource type="Resource" uid="uid://ymimts6e1sd7" path="res://item/weapon/ranged/gun/gun_resource.tres" id="3_cnitu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8h7tw"]
+radius = 52.03845
+
+[node name="Gun" type="RigidBody2D" node_paths=PackedStringArray("shoot_pos", "area")]
+script = ExtResource("1_2smlw")
+reload_time = 1.2
+ammo_resource = ExtResource("2_iuhax")
+shoot_pos = NodePath("ShootPos")
+shoot_speed = 2000.0
+resource = ExtResource("3_cnitu")
+area = NodePath("DetectionArea")
+metadata/_custom_type_script = "uid://drfx68mje27lq"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(3, 3)
+polygon = PackedVector2Array(2, 6, -3, 6, -3, -3, 28, -3, 28, 2, 2, 2)
+
+[node name="ShootPos" type="Marker2D" parent="."]
+position = Vector2(84, -1)
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2(39, 1)
+shape = SubResource("CircleShape2D_8h7tw")

@@ -8,14 +8,17 @@ signal reloaded
 
 @export var reload_time: float ## Time in seconds to reload.
 @export var ammo_resource: AmmoResource ## Resource for ammo info.
+@export var shoot_pos: Marker2D ## Place where the bullet initially spawns in.
+@export var shoot_speed: float ## Force/speed the ammo is shot with, has to be implemented.
 
 var ammo_count: int ## Amount of ammo currently in the weapon.
-var has_rounds: bool ## If whatever is holding this currently can supply rounds.
+var has_rounds: bool = true ## If whatever is holding this currently can supply rounds.
 
 @onready var reload_timer: ResourceTimer = ResourceTimer.new(0) ## Timer activated when reloading.
 
 func _ready() -> void:
 	super()
+	ammo_count = ammo_resource.round_size
 	reload_timer.timeout.connect(_on_reload_timer_timeout)
 	assert(ammo_resource, "RangedWeapon must have an AmmoResource.")
 
@@ -30,6 +33,10 @@ func use_item() -> void:
 	if !can_perform_action():
 		return
 	super()
+	ammo_count -= 1
+	if ammo_count <= 0:
+		reload()
+		return
 	begin_attack()
 
 ## Emits signal, resets timer and ammo count.

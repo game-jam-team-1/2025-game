@@ -2,19 +2,22 @@ class_name Gun
 extends RangedWeapon
 ## Tier 1 ranged weapon
 ## 
-## Scene is item/weapon/ranged/gun.tscn
+## Scene is item/weapon/ranged/gun/gun.tscn
 
 ## If this is true the gun will snap to the four directions. Otherwise it will
 ## try to point at the mouse.
 @export var use_digital_mode: bool
 
 func _ready() -> void:
-	if use_digital_mode:
-		freeze = true
+	super()
+	freeze = true
 
 ## Shoots the gun
 func begin_attack() -> void:
-	pass
+	var ammo: GunAmmo = ammo_resource.get_scene().instantiate()
+	get_parent().get_parent().add_child(ammo) ## TODO: Replace this with root node on global singleton...
+	ammo.exclude_bodies.append(self)
+	ammo.shoot(shoot_pos.global_position, Vector2.from_angle(rotation), shoot_speed)
 
 func throw_item(direction: Vector2, speed: float) -> void:
 	pass

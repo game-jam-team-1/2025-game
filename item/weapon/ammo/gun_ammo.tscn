@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dex83eeskmynq"]
-
-[ext_resource type="Script" uid="uid://hygk5prlo1er" path="res://item/weapon/ammo/gun_ammo.gd" id="1_jue32"]
-
-[node name="GunAmmo" type="Area2D"]
-script = ExtResource("1_jue32")
-metadata/_custom_type_script = "uid://hygk5prlo1er"

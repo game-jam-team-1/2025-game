@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AmmoResource" load_steps=2 format=3 uid="uid://jkhoyvr353kr"]
+
+[ext_resource type="Script" uid="uid://ddwx6i4ebwgft" path="res://item/weapon/ranged/ammo_resource.gd" id="1_hdq6k"]
+
+[resource]
+script = ExtResource("1_hdq6k")
+round_size = 8
+scene_path = "uid://dex83eeskmynq"
+stackable = true
+metadata/_custom_type_script = "uid://ddwx6i4ebwgft"
