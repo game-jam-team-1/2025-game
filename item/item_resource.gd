@@ -12,3 +12,6 @@ extends Resource
 
 func _init(new_tier: int = 0) -> void:
 	tier = new_tier
+
+func get_scene() -> PackedScene:
+	return load(scene_path)

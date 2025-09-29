@@ -9,7 +9,7 @@ signal died(to: Node)
 @export var debug: bool = false
 
 ## Default weapon (probably [class Fists]).
-@export var default_weapon: MeleWeapon
+@export var default_weapon: Weapon
 
 ## Player ID, usually gonna be from 1-4.
 var player_id: int = 0

@@ -2,7 +2,7 @@ class_name FistsWeapon
 extends MeleWeapon
 ## Fists are always on the player.
 ## 
-## SCENE: item/weapon/fists.tscn
+## SCENE: item/weapon/mele/fists.tscn
 
 const player_dist_cutoff: float = 50.0
 const mouse_force_multiplier: float = 100.0
