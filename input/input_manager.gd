@@ -37,6 +37,9 @@ func _ready() -> void:
 		add_controller(Controller.Type.GAMEPAD, id)
 
 func _process(_delta: float) -> void:
+	for controller: Controller in controllers:
+		controller.pre_inputs()
+	
 	var joypads: Array[int] = Input.get_connected_joypads()
 	for id: int in joypads:
 		var has_controller_with_id: bool = false
