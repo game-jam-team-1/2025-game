@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3gux3il20mlc"]
+
+[ext_resource type="Script" uid="uid://cq025ihxw6w2i" path="res://ui/individual_select.gd" id="1_dlm21"]
+
+[node name="IndividualSelect" type="PanelContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_dlm21")
+metadata/_custom_type_script = "uid://cq025ihxw6w2i"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "No Character Selected"
+horizontal_alignment = 1
